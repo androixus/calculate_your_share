@@ -1,6 +1,6 @@
 
 export default {
-  basePath: 'https://github.com/androixus/calculate_your_share.git',
+  basePath: '/calculate_your_share',
   supportedLocales: {
   "en-US": ""
 },

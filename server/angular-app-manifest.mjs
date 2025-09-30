@@ -2,19 +2,19 @@
 export default {
   bootstrap: () => import('./main.server.mjs').then(m => m.default),
   inlineCriticalCss: true,
-  baseHref: 'https://github.com/androixus/calculate_your_share.git',
+  baseHref: '/calculate_your_share/',
   locale: undefined,
   routes: [
   {
     "renderMode": 2,
-    "route": "/androixus/calculate_your_share.git"
+    "route": "/calculate_your_share"
   }
 ],
   entryPointToBrowserMapping: undefined,
   assets: {
-    'index.csr.html': {size: 485, hash: '7c4e8f35f1476ed73d6978b2263faf85e8b9562c092a076e4dcf0a9c0f514d67', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 998, hash: 'd9b54d8f94919ffbbf9c0587a42e9c459e06da02153538e39a281fe61ad1e54e', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'index.html': {size: 21545, hash: '4cba34139b047be6ac3d2eb7699a022b41a1d3d7f7f385a0ddd399ccd7473979', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 498, hash: '78253ba14f6516c53d91f892457535749903dea834025d9d2e1ae11b9ef2ee6d', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 1011, hash: '907d33c110ac0e1579a5594f95199b49f6fcc3e4d8eafaf298b11e1213379495', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'index.html': {size: 21558, hash: '2befa89407417fe646dcaa9bd90dc30a9af96e3f6417023f502de5ce99079821', text: () => import('./assets-chunks/index_html.mjs').then(m => m.default)},
     'styles-5INURTSO.css': {size: 0, hash: 'menYUTfbRu8', text: () => import('./assets-chunks/styles-5INURTSO_css.mjs').then(m => m.default)}
   },
 };
