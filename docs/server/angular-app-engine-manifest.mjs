@@ -1,6 +1,6 @@
 
 export default {
-  basePath: 'C:/Program Files/Git/calculate_your_share',
+  basePath: '/',
   supportedLocales: {
   "en-US": ""
 },
