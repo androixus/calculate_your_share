@@ -1,0 +1,149 @@
+:host { display: block; background: #0b0f14; color: #eaf2fb; min-height: 100svh; }
+
+.container { max-width: 720px; margin: 0 auto; padding: 12px; }
+
+.header { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+
+.badge { padding: 4px 8px; border-radius: 999px; background: #24425c; font-size: 0.8rem; }
+.badge.stopped { background: #5c2424; }
+
+.commands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0 8px; }
+
+.btn {
+  width: 100%; padding: 10px 12px; border: 0; border-radius: 12px;
+  background: #1c2833; color: #d7e6f7; font-weight: 600;
+}
+.btn:hover { filter: brightness(1.05); cursor: pointer; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn.primary { background: #2b5aa0; }
+.btn.warn { background: #8b2e2e; }
+
+/* Leaving button (🚶) */
+.btn.small {
+  padding: 2px;
+  font-size: 1.2rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #b22222;
+  color: #fff;
+}
+.btn.small:hover { background: #d62828; cursor: pointer; }
+
+/* Top line: started-at left, total-cost right */
+.totals {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #121a22; padding: 10px 12px; border-radius: 12px; margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.started-at { font-size: 0.85rem; color: #9ecbff; opacity: 0.85; }
+.total-cost { text-align: right; }
+
+.list { background: #121a22; border-radius: 16px; overflow: hidden; }
+
+/* Default grid without cost column */
+.list-header, .row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.7fr 0.7fr 0.6fr 0.6fr;
+  gap: 8px;
+  padding: 10px 12px;
+  align-items: center;
+}
+/* With cost column */
+.list.has-cost .list-header,
+.list.has-cost .row {
+  grid-template-columns: 1fr 0.7fr 0.7fr 0.6fr 0.7fr 0.6fr;
+}
+
+.col.name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Smaller, dimmer text for Joined/Left/Minutes values */
+.col.joined, .col.left, .col.minutes {
+  font-size: 0.75rem;
+  color: #aaa;
+  text-align: right;
+}
+
+/* Green text for costs */
+.col.cost {
+  text-align: right;
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.col.action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Link-like player name (clickable) */
+.linklike {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #8ab4ff;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+.linklike:hover { color: #b3ccff; }
+
+/* Footer summary */
+.summary-below {
+  margin-top: 8px;
+  background: #121a22;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.empty { padding: 16px 12px; text-align: center; opacity: 0.8; }
+.footnote { margin-top: 12px; font-size: 0.85rem; opacity: 0.85; }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+.modal {
+  width: min(520px, 92vw);
+  background: #0f161d;
+  border: 1px solid #1f2a35;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+.modal h3 { margin: 0 0 10px; font-size: 1.05rem; }
+.form-row { display: grid; grid-template-columns: 110px 1fr; gap: 10px; align-items: center; margin: 8px 0; }
+.form-row label { opacity: .85; }
+.form-row input {
+  width: 100%;
+  background: #0b0f14;
+  color: #eaf2fb;
+  border: 1px solid #223040;
+  border-radius: 8px;
+  padding: 8px;
+}
+.note { font-size: .85rem; opacity: .85; margin-top: 6px; }
+.note.warn { color: #ffcc80; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .commands { grid-template-columns: repeat(2, 1fr); }
+  .list-header, .row { gap: 6px; }
+  .list.has-cost .list-header,
+  .list.has-cost .row {
+    grid-template-columns: 1fr 0.65fr 0.65fr 0.55fr 0.65fr 0.55fr;
+  }
+  .form-row { grid-template-columns: 1fr; }
+  .form-row label { margin-bottom: 4px; }
+}

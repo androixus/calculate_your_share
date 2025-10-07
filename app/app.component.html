@@ -1,0 +1,120 @@
+<div class="container">
+  <header class="header">
+    <div class="subtitle">
+      <span class="badge" [class.stopped]="gameStopped()">
+        {{ gameStopped() ? 'Stopped' : 'Running' }}
+      </span>
+    </div>
+  </header>
+
+  <div class="commands">
+    <button class="btn warn" (click)="onNewGame()">New Game</button>
+    <button class="btn" (click)="onAddPlayer()">add_player</button>
+    <button class="btn" (click)="onStopGame()">stop_game</button>
+    <button class="btn primary" (click)="onTotalCost()">total_cost</button>
+  </div>
+
+  <!-- Top bar: Started at (left) + Total Cost (right) -->
+  <div class="totals">
+    <div class="started-at" *ngIf="gameStartAt()">
+      (Started at {{ gameStartAt() | date:'HH:mm' }})
+    </div>
+    <div *ngIf="totalCost() !== null" class="total-cost">
+      <strong>Total Cost:</strong> {{ totalCost() | number:'1.2-2' }}
+    </div>
+  </div>
+
+  <!-- Players list -->
+  <section class="list" [class.has-cost]="totalCost() !== null">
+    <div class="list-header">
+      <div class="col name">Player</div>
+      <div class="col joined">Joined</div>
+      <div class="col left">Left</div>
+      <div class="col minutes">Minutes</div>
+      <div class="col cost" *ngIf="totalCost() !== null">Cost</div>
+      <div class="col action">Action</div>
+    </div>
+
+    <div class="row" *ngFor="let p of players(); trackBy: trackByName">
+      <div class="col name">
+        <!-- CLICKABLE NAME (opens edit modal) -->
+        <button class="linklike" (click)="onClickPlayer(p)" [title]="'Edit times for ' + p.name">
+          {{ p.name }}
+        </button>
+      </div>
+
+      <div class="col joined">
+        <ng-container *ngIf="p.joinAt; else dashJoin">
+          {{ p.joinAt | date:'HH:mm' }}
+        </ng-container>
+        <ng-template #dashJoin>—</ng-template>
+      </div>
+
+      <div class="col left">
+        <ng-container *ngIf="p.lastLeaveAt; else dashLeft">
+          {{ p.lastLeaveAt | date:'HH:mm' }}
+        </ng-container>
+        <ng-template #dashLeft>—</ng-template>
+      </div>
+
+      <div class="col minutes">{{ displayedMinutes(p) }}</div>
+
+      <div class="col cost" *ngIf="totalCost() !== null">
+        {{ shareFor(p) ?? 0 | number:'1.2-2' }}
+      </div>
+
+      <div class="col action">
+        <button class="btn small"
+                title="Player leaves the game"
+                [disabled]="p.status !== 'playing'"
+                (click)="onLeave(p)">🚶</button>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="players().length === 0">
+      No players yet. Use <em>add_player</em> to add someone.
+    </div>
+  </section>
+
+  <!-- Footer & summary -->
+  <footer class="footnote" *ngIf="totalCost() !== null">
+    <p>
+      Costs are split proportionally by total minutes per player. Minutes are rounded up per session.
+    </p>
+
+    <div class="summary-below">
+      <strong>Sum of all minutes:</strong> {{ totalPlayedMinutes() }}
+    </div>
+  </footer>
+</div>
+
+<!-- ===== Edit Modal (time-only) ===== -->
+<div class="modal-backdrop" *ngIf="editing()">
+  <div class="modal">
+    <h3>Edit times — {{ editing()?.name }}</h3>
+
+    <div class="form-row">
+      <label>Joined</label>
+      <input type="time" [(ngModel)]="editing()!.joinTime">
+    </div>
+
+    <div class="form-row" *ngIf="editing()?.status === 'left'">
+      <label>Left</label>
+      <input type="time" [(ngModel)]="editing()!.leaveTime">
+    </div>
+
+    <div class="note" *ngIf="editing()?.status === 'playing'">
+      Player is currently playing. You can adjust <em>Joined</em>; minutes will update live.
+    </div>
+    <div class="note warn" *ngIf="editing()?.readonlyNote">
+      {{ editing()?.readonlyNote }}
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" (click)="closeEdit()">Cancel</button>
+      <button class="btn primary"
+              [disabled]="!!editing()?.readonlyNote"
+              (click)="saveEdit()">Save</button>
+    </div>
+  </div>
+</div>
